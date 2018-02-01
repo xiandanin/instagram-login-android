@@ -1,5 +1,7 @@
 package com.dyhdyh.instagram.login;
 
+import android.text.TextUtils;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
@@ -59,8 +61,8 @@ public class InstagramAuthHelper {
      * @throws MalformedURLException
      */
     public String parserCodeByUrl(String url) throws MalformedURLException {
-        URL newUrl = new URL(url);
-        if (url.startsWith(mRedirectUri)) {
+        if (!TextUtils.isEmpty(url) && url.startsWith(mRedirectUri)) {
+            URL newUrl = new URL(url);
             String queryString = newUrl.getQuery();
             Map<String, String> params = queryString2Params(queryString);
             return params.get("code");

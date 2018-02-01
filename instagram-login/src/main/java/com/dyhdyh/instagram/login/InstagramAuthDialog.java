@@ -3,7 +3,6 @@ package com.dyhdyh.instagram.login;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
@@ -69,13 +68,9 @@ public class InstagramAuthDialog extends Dialog {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                requestAccessTokenByCode(url);
                 view.loadUrl(url);
                 return true;
-            }
-
-            @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                requestAccessTokenByCode(url);
             }
         });
     }

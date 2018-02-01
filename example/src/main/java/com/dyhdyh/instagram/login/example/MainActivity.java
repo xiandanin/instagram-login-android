@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dyhdyh.instagram.login.InstagramAuthDialog;
@@ -21,10 +23,16 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 
+    TextView tv_log;
+    ProgressBar pb;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        tv_log = findViewById(R.id.tv_log);
+        pb = findViewById(R.id.pb);
     }
 
     public void clickAccessToken(View v) {
@@ -40,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void requestInstagramAccessToken(String tokenUrl, Map<String, String> params) {
+        pb.setVisibility(View.VISIBLE);
+
         Set<Map.Entry<String, String>> entries = params.entrySet();
         FormBody.Builder builder = new FormBody.Builder();
         for (Map.Entry<String, String> entry : entries) {
@@ -53,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         Log.e("Instagram-Login", "登录失败", e);
+                        pb.setVisibility(View.GONE);
+                        tv_log.setText(e.getMessage());
                         Toast.makeText(MainActivity.this, "登录失败", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -65,7 +77,9 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         Log.d("Instagram-Login", "登录成功" + json);
-                        Toast.makeText(MainActivity.this, "登录成功" + json, Toast.LENGTH_SHORT).show();
+                        pb.setVisibility(View.GONE);
+                        tv_log.setText(json);
+                        Toast.makeText(MainActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
