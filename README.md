@@ -1,5 +1,5 @@
 # instagram-login-android
-基于OAuth API对Instagram第三方登录的封装
+基于OAuth API对Instagram的授权登录封装成SDK
 
 ###  Gradle
 ```
