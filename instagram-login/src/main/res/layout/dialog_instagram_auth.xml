@@ -8,4 +8,10 @@
         android:id="@+id/wb_dialog_instagram"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <ProgressBar
+        android:id="@+id/pb_dialog_instagram"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="2dp" />
 </RelativeLayout>
