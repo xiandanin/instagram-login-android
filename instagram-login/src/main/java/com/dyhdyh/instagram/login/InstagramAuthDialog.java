@@ -3,6 +3,7 @@ package com.dyhdyh.instagram.login;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
@@ -47,6 +48,12 @@ public class InstagramAuthDialog extends Dialog {
 
     public InstagramAuthDialog setInstagramRequest(InstagramRequest request) {
         mHelper.setInstagramRequest(request);
+        return this;
+    }
+
+
+    public InstagramAuthDialog setProgressDrawable(Drawable drawable) {
+        mProgressBar.setProgressDrawable(drawable);
         return this;
     }
 

@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     public void clickAccessToken(View v) {
         new InstagramAuthDialog(this)
                 .setup(getString(R.string.client_id), getString(R.string.client_secret), getString(R.string.redirect_uri))
+                .setProgressDrawable(getResources().getDrawable(R.drawable.progressbar_horizontal))
                 .setInstagramRequest(new InstagramRequest() {
                     @Override
                     public void requestAccessToken(String tokenUrl, Map<String, String> params) {
@@ -78,12 +79,53 @@ public class MainActivity extends AppCompatActivity {
                     public void run() {
                         Log.d("Instagram-Login", "登录成功" + json);
                         pb.setVisibility(View.GONE);
-                        tv_log.setText(json);
+                        tv_log.setText(formatJson(json));
                         Toast.makeText(MainActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
 
         });
+    }
+
+
+    /**
+     * 格式化json
+     *
+     * @param content
+     * @return
+     */
+    public String formatJson(String content) {
+        StringBuffer sb = new StringBuffer();
+        int index = 0;
+        int count = 0;
+        while (index < content.length()) {
+            char ch = content.charAt(index);
+            if (ch == '{' || ch == '[') {
+                sb.append(ch);
+                sb.append('\n');
+                count++;
+                for (int i = 0; i < count; i++) {
+                    sb.append('\t');
+                }
+            } else if (ch == '}' || ch == ']') {
+                sb.append('\n');
+                count--;
+                for (int i = 0; i < count; i++) {
+                    sb.append('\t');
+                }
+                sb.append(ch);
+            } else if (ch == ',') {
+                sb.append(ch);
+                sb.append('\n');
+                for (int i = 0; i < count; i++) {
+                    sb.append('\t');
+                }
+            } else {
+                sb.append(ch);
+            }
+            index++;
+        }
+        return sb.toString();
     }
 }
