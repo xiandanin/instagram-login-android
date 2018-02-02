@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="client_id">bab949224eab4d0da060f64c29a9c1f4</string>
-    <string name="client_secret">287fb5238b944df69bb1951d16148940</string>
-    <string name="redirect_uri">http://www.digizen.cn</string>
+    <string name="client_id"></string>
+    <string name="client_secret"></string>
+    <string name="redirect_uri"></string>
 </resources>

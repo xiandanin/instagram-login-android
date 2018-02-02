@@ -1,6 +1,5 @@
 package com.dyhdyh.instagram.login;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -30,7 +29,7 @@ public class InstagramAuthDialog extends Dialog {
     private ProgressBar mProgressBar;
     private View mToolBarView;
 
-    public InstagramAuthDialog(@NonNull Activity context) {
+    public InstagramAuthDialog(@NonNull Context context) {
         this(context, R.style.Theme_Dialog_Instagram);
     }
 
