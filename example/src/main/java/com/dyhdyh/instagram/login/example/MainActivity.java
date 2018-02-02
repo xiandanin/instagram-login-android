@@ -3,7 +3,9 @@ package com.dyhdyh.instagram.login.example;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +40,15 @@ public class MainActivity extends AppCompatActivity {
     public void clickAccessToken(View v) {
         new InstagramAuthDialog(this)
                 .setup(getString(R.string.client_id), getString(R.string.client_secret), getString(R.string.redirect_uri))
+                .setupToolbar(new InstagramAuthDialog.AuthToolbarCallback() {
+                    @Override
+                    public View onSetupToolbar(ViewGroup parentView, View.OnClickListener backClickListener, View.OnClickListener clearAuthClickListener) {
+                        View layout = LayoutInflater.from(parentView.getContext()).inflate(R.layout.layout_instagram_toolbar, parentView, false);
+                        layout.findViewById(R.id.tv_back).setOnClickListener(backClickListener);
+                        layout.findViewById(R.id.tv_change).setOnClickListener(clearAuthClickListener);
+                        return layout;
+                    }
+                })
                 .setProgressDrawable(getResources().getDrawable(R.drawable.progressbar_horizontal))
                 .setInstagramRequest(new InstagramRequest() {
                     @Override

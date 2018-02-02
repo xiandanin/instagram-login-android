@@ -7,7 +7,10 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -22,8 +25,10 @@ import java.net.MalformedURLException;
 public class InstagramAuthDialog extends Dialog {
     protected InstagramAuthHelper mHelper;
 
+    private ViewGroup mAuthMainLayout;
     private WebView mWebView;
     private ProgressBar mProgressBar;
+    private View mToolBarView;
 
     public InstagramAuthDialog(@NonNull Activity context) {
         this(context, R.style.Theme_Dialog_Instagram);
@@ -34,7 +39,7 @@ public class InstagramAuthDialog extends Dialog {
         setContentView(R.layout.dialog_instagram_auth);
         getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
 
-
+        mAuthMainLayout = findViewById(R.id.layout_auth_main);
         mWebView = findViewById(R.id.wb_dialog_instagram);
         mProgressBar = findViewById(R.id.pb_dialog_instagram);
     }
@@ -52,9 +57,43 @@ public class InstagramAuthDialog extends Dialog {
     }
 
 
+    public InstagramAuthDialog setupToolbar(AuthToolbarCallback callback) {
+        if (mToolBarView != null) {
+            mAuthMainLayout.removeView(mToolBarView);
+        }
+        if (callback != null) {
+            View toolbarView = callback.onSetupToolbar(mAuthMainLayout, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onBackPressed();
+                }
+            }, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    clearAuthCookie();
+                    mWebView.loadUrl(mHelper.getRedirectOAuthUrl());
+                }
+            });
+            if (toolbarView != null) {
+                mToolBarView = toolbarView;
+                mAuthMainLayout.addView(mToolBarView, 0);
+            }
+        }
+        return this;
+    }
+
     public InstagramAuthDialog setProgressDrawable(Drawable drawable) {
         mProgressBar.setProgressDrawable(drawable);
         return this;
+    }
+
+
+    public void clearAuthCookie() {
+        CookieSyncManager.createInstance(mWebView.getContext());
+        CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.setAcceptCookie(true);
+        cookieManager.removeSessionCookie();
+        cookieManager.removeAllCookie();
     }
 
 
@@ -107,5 +146,9 @@ public class InstagramAuthDialog extends Dialog {
         } else {
             super.onBackPressed();
         }
+    }
+
+    public interface AuthToolbarCallback {
+        View onSetupToolbar(ViewGroup parentView, View.OnClickListener backClickListener, View.OnClickListener clearAuthClickListener);
     }
 }

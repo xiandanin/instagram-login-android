@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/layout_auth_main"
     android:orientation="vertical">
 
-    <WebView
-        android:id="@+id/wb_dialog_instagram"
+    <RelativeLayout
+        android:id="@+id/layout_instagram_auth"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
 
-    <ProgressBar
-        android:id="@+id/pb_dialog_instagram"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="2dp" />
-</RelativeLayout>
+        <WebView
+            android:id="@+id/wb_dialog_instagram"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ProgressBar
+            android:id="@+id/pb_dialog_instagram"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="2dp" />
+    </RelativeLayout>
+
+</LinearLayout>
