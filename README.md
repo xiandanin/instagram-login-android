@@ -12,7 +12,8 @@ compile 'com.dyhdyh:instagram-login:1.0.3'
 new InstagramAuthDialog(this)
         .setup(clientId, clientSecret, redirectUri)
         .setupToolbar((parentView, backClickListener, clearAuthClickListener) -> {
-            View layout = LayoutInflater.from(parentView.getContext()).inflate(R.layout.layout_instagram_toolbar, parentView, false);
+            //自定义Toolbar
+            View layout = LayoutInflater.from(parentView.getContext()).inflate(R.layout.layout_instagram_toolbar, parentView, false);
             layout.findViewById(R.id.tv_toolbar_left).setOnClickListener(backClickListener);
             layout.findViewById(R.id.tv_toolbar_right).setOnClickListener(clearAuthClickListener);
             return layout;
