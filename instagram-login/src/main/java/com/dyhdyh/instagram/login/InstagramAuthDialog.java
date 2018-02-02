@@ -36,7 +36,7 @@ public class InstagramAuthDialog extends Dialog {
     public InstagramAuthDialog(@NonNull Context context, int themeResId) {
         super(context, themeResId);
         setContentView(R.layout.dialog_instagram_auth);
-        getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
 
         mAuthMainLayout = findViewById(R.id.layout_auth_main);
         mWebView = findViewById(R.id.wb_dialog_instagram);
